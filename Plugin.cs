@@ -1,8 +1,11 @@
 ﻿using System.Linq;
 using System.Reflection;
-using BepInEx.Unity.Mono;
 using BepInEx;
 using HarmonyLib;
+
+#if BEPINEX_V6
+    using BepInEx.Unity.Mono;
+#endif
 
 namespace AlphaDLSSEnabler 
     {
