@@ -11,7 +11,7 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<AssemblyName>AlphaDLSSEnabler</AssemblyName>
 		<Description>Use at own risk! Enables DLSS in Cities Skylines 2</Description>
-		<Version>0.1.0</Version>
+		<Version>0.2.0</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
 		<RestoreAdditionalProjectSources>

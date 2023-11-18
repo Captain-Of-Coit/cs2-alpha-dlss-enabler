@@ -4,7 +4,7 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "CaptainOfCoit"
 name = "AlphaDLSSEnabler"
-versionNumber = "0.1.0"
+versionNumber = "0.2.0"
 description = "Enables experimental NVIDIA DLSS"
 websiteUrl = "https://thunderstore.io"
 containsNsfwContent = false
