@@ -13,11 +13,11 @@ The benchmark was made by animating the camera from outside the city to zoomed i
 # Requirements
 
 - [Cities: Skylines 2](https://store.steampowered.com/app/949230/Cities_Skylines_II/) (duh)
-- [BepInEx-Unity.Mono-win-x64-6.0.0-be.674+82077ec](https://builds.bepinex.dev/projects/bepinex_be)
+- [BepInEx 5.4.22](https://github.com/BepInEx/BepInEx/releases) or later
 
 # Installation
 
-- Make sure BepInEx 6.0.0 is installed
+- Make sure BepInEx 5 is installed
 - Download latest release from GitHub - [https://github.com/Captain-Of-Coit/cs2-alpha-dlss-enabler/releases](https://github.com/Captain-Of-Coit/cs2-alpha-dlss-enabler/releases)
 - Extract the ZIP archive and place the `AlphaDLSSEnabler` directory in `BepInEx\Plugins`
 - Launch the game. DLSS will automatically be activated, and can only be disabled by removing the mod.
