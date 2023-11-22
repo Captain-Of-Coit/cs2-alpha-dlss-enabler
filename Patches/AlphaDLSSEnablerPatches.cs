@@ -16,16 +16,15 @@ namespace AlphaDLSSEnabler.Patches
     [HarmonyPatch(typeof(AdaptiveDynamicResolutionScale), "SetParams")]
     internal class AdaptiveDynamicResolutionScale_SetParamsPatch
     {
-        static void Prefix(bool enabled, ref AdaptiveDynamicResolutionScale.DynResUpscaleFilter filter, ref Camera camera)
+        static void Prefix(bool enabled, ref DynResUpscaleFilter filter, ref Camera camera)
         {
             if (camera != null)
             {
-                object[] obj = { filter };
-                MethodInfo b = typeof(AdaptiveDynamicResolutionScale).GetMethod("GetFilterFromUiEnum", BindingFlags.NonPublic | BindingFlags.Static);
+                MethodInfo GetFilterFromUiEnum = typeof(AdaptiveDynamicResolutionScale).GetMethod("GetFilterFromUiEnum", BindingFlags.NonPublic | BindingFlags.Static);
                 DynamicResolutionHandler.SetUpscaleFilter(camera,
-                (!enabled)
-                ? DynamicResUpscaleFilter.CatmullRom
-                : (DynamicResUpscaleFilter)b.Invoke(null, obj)
+                    (!enabled)
+                    ? DynamicResUpscaleFilter.CatmullRom
+                    : (DynamicResUpscaleFilter)GetFilterFromUiEnum.Invoke(null, [filter])
                 );
                 camera.GetComponent<HDAdditionalCameraData>().allowDeepLearningSuperSampling = false;
                 if (filter == DynResUpscaleFilter.DLSS)
@@ -50,7 +49,6 @@ namespace AlphaDLSSEnabler.Patches
     {
         static List<EnumMember> Postfix(List<EnumMember> __result,Type underlyingType, string baseId)
         {
-
             string[] names = Enum.GetNames(underlyingType);
             Array values = Enum.GetValues(underlyingType);
             for (int i = 0; i < names.Length; i++)
@@ -60,8 +58,8 @@ namespace AlphaDLSSEnabler.Patches
                     int num = (int)values.GetValue(i);
                     __result.Add(new EnumMember((ulong)num, baseId + "." + underlyingType.Name.ToUpperInvariant() + "[" + names[i] + "]", !IsSelectable(num)));
                 }
-    
             }
+
             bool IsSelectable(int value)
             {
                 if (underlyingType == typeof(QualitySetting.Level) && value == 6)
@@ -76,13 +74,9 @@ namespace AlphaDLSSEnabler.Patches
     [HarmonyPatch(typeof(AdaptiveDynamicResolutionScale), "GetFilterFromUiEnum")]
     internal class SettingsPatch
     {
-
-        enum PatchClass : byte
-        {
-            DLSS = 6
-        }
+        private static readonly byte DLSS = 6;
         
-        static bool Prefix(ref AdaptiveDynamicResolutionScale.DynResUpscaleFilter filter,ref DynamicResUpscaleFilter __result)
+        static bool Prefix(ref DynResUpscaleFilter filter,ref DynamicResUpscaleFilter __result)
         {
             __result = filter switch
             {
@@ -90,11 +84,10 @@ namespace AlphaDLSSEnabler.Patches
                 DynResUpscaleFilter.EdgeAdaptiveScaling => DynamicResUpscaleFilter.EdgeAdaptiveScalingUpres,
                 DynResUpscaleFilter.ContrastAdaptiveSharpen => DynamicResUpscaleFilter.TAAU,
                 DynResUpscaleFilter.TAAU => DynamicResUpscaleFilter.ContrastAdaptiveSharpen,
-                DynResUpscaleFilter.DLSS => (DynamicResUpscaleFilter)PatchClass.DLSS,
+                DynResUpscaleFilter.DLSS => (DynamicResUpscaleFilter)DLSS,
                 _ => throw new NotSupportedException($"{filter} is not a supported upscaler"),
             };
             return false;
         }
-
     }
 }
