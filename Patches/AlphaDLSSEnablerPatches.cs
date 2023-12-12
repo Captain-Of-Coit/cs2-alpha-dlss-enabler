@@ -44,19 +44,20 @@ namespace AlphaDLSSEnabler.Patches
         }
     }
 
-    [HarmonyPatch(typeof(AutomaticSettings.EnumDropdownValues), "GetValues",new Type[] {typeof(Type),typeof(string)})]
+    [HarmonyPatch(typeof(AutomaticSettings), "GetEnumValues", new Type[] {typeof(Type),typeof(string)})]
     internal class SettingVisibility
     {
-        static List<EnumMember> Postfix(List<EnumMember> __result,Type underlyingType, string baseId)
+        static EnumMember[] Postfix(EnumMember[] __result,Type underlyingType, string prefix)
         {
             string[] names = Enum.GetNames(underlyingType);
             Array values = Enum.GetValues(underlyingType);
+            List<EnumMember> temp = new List<EnumMember>(__result);
             for (int i = 0; i < names.Length; i++)
             {
                 if (names[i].Equals("DLSS"))
                 {
                     int num = (int)values.GetValue(i);
-                    __result.Add(new EnumMember((ulong)num, baseId + "." + underlyingType.Name.ToUpperInvariant() + "[" + names[i] + "]", !IsSelectable(num)));
+                    temp.Add(new EnumMember((ulong)num, prefix + "." + underlyingType.Name.ToUpperInvariant() + "[" + names[i] + "]", !IsSelectable(num)));
                 }
             }
 
@@ -68,6 +69,7 @@ namespace AlphaDLSSEnabler.Patches
                 }
                 return true;
             }
+            __result = temp.ToArray();
             return __result;
         }
     }
