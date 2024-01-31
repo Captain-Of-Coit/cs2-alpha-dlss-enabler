@@ -1,5 +1,7 @@
 # Cities: Skylines 2 - Alpha DLSS Enabler
 
+NOTE: This fork of the orginal mod that has not been updated, I did make a pull request but still waiting on a response
+
 This mods enables the experimental DLSS support. WARNING! When I say experimental, I mean it. Bunch of graphical artifacts are introduced when you activate this mod, as it's not properly implemented yet.
 
 Personally I experienced ~10 FPS on average increase. However, performance when viewing citizens is still abysmall and this doesn't seem to help a lot with that particular problem.
@@ -18,7 +20,7 @@ The benchmark was made by animating the camera from outside the city to zoomed i
 # Installation
 
 - Make sure BepInEx 5 is installed
-- Download latest release from GitHub - [https://github.com/Captain-Of-Coit/cs2-alpha-dlss-enabler/releases](https://github.com/Captain-Of-Coit/cs2-alpha-dlss-enabler/releases)
+- Download latest release from GitHub - [https://github.com/repletsin5/cs2-alpha-dlss-enabler/releases](https://github.com/repletsin5/cs2-alpha-dlss-enabler/releases)
 - Extract the ZIP archive and place the `AlphaDLSSEnabler` directory in `BepInEx\Plugins`
 - Launch the game. DLSS will automatically be activated, and can only be disabled by removing the mod.
 
