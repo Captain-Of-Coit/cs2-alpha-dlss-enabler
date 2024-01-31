@@ -11,7 +11,7 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<AssemblyName>AlphaDLSSEnabler</AssemblyName>
 		<Description>Use at own risk! Enables DLSS in Cities Skylines 2</Description>
-		<Version>0.2.0</Version>
+		<Version>0.3.0</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
 		<RestoreAdditionalProjectSources>
@@ -36,9 +36,9 @@
 		above needs to be uncommented for this to work
 	-->
 	<ItemGroup>
-        <Reference Include="$(Cities2_Location)\Cities2_Data\Managed\Colossal.*.dll" Private="False"/>
-        <Reference Include="$(Cities2_Location)\Cities2_Data\Managed\Game.dll" Private="False"/>
-        <Reference Include="$(Cities2_Location)\Cities2_Data\Managed\Unity.*.dll" Private="False"/>
+        <Reference Include="$(Cities2_Location)\Cities2_Data\Managed\Colossal.*.dll" Private="False" />
+        <Reference Include="$(Cities2_Location)\Cities2_Data\Managed\Game.dll" Private="False" />
+        <Reference Include="$(Cities2_Location)\Cities2_Data\Managed\Unity.*.dll" Private="False" />
 	</ItemGroup>
 
 	<!--
@@ -48,16 +48,6 @@
 	</ItemGroup>
 	-->
 
-	<!--
-		This ItemGroup is used in CI for the game DLLs.
-		Make sure you have a private `libcs2` repository with the appropriate DLLs for this to work.
-		DO NOT make the proprietary DLLs for the game public, as the files are owned by PDX/CO. 
-	-->
-	<ItemGroup>
-		<Reference Include="libcs2/Colossal.*.dll" Private="False"/>
-		<Reference Include="libcs2/Game.dll" Private="False"/>
-		<Reference Include="libcs2/Unity.*.dll" Private="False"/>
-	</ItemGroup>
 
 	<!--
 		Everything related to BepInEx and Harmony
@@ -77,11 +67,19 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(BepInExVersion)' == '5'">
-		<PackageReference Include="BepInEx.Core" Version="5.4.21" IncludeAssets="compile"/>
+		<PackageReference Include="BepInEx.Core" Version="5.4.21" IncludeAssets="compile" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(BepInExVersion)' == '6'">
 		<DefineConstants>$(DefineConstants);BEPINEX_V6</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <DebugType>none</DebugType>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
